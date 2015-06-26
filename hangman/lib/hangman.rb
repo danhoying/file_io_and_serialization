@@ -1,8 +1,3 @@
-# Hangman
-
-# A hangman game played against the computer on the command line.  Features
-# game saving/loading functionality.
-
 require 'yaml'
 
 class Hangman
@@ -16,6 +11,7 @@ class Hangman
     @guess = ""
   end
 
+  # Creates a save file directory and initializes the game.
   def start_game
     Dir.mkdir("save") unless Dir.exists? "save"
     puts ""
@@ -25,13 +21,13 @@ class Hangman
     puts ""
     puts "Try to guess the secret word. You have #{@guesses_left} guesses."
     get_word
-    puts @secret_word
     create_blanks
     take_turn
   end
 
   protected
 
+  # Game loop.  Runs until certain game conditions are met.
   def take_turn
     until @guesses_left == 0 || @blanks.eql?(@secret_word)
       display_board
@@ -67,6 +63,7 @@ class Hangman
     end
   end
 
+  # Randomly chooses a word between 5 and 12 letters long from a dictionary text file.
   def get_word
     dictionary_file = '5desk.txt'
     dictionary = File.readlines(dictionary_file)
@@ -87,6 +84,7 @@ class Hangman
     puts ""
   end
 
+  # Prompt for letter entry.  User can save the game here by typing 'save'.
   def get_guess
     @guess = ""
     until @guess.match(/^[a-z]$/) && !@already_guessed.include?(@guess)
@@ -103,6 +101,8 @@ class Hangman
     @guess
   end
 
+  # Adds all guessed letters to 'already_guessed'. Replaces blanks with letters 
+  # if a correct guess is made. Otherwise, adds guesses to 'missed_letters'.
   def check_guess
     @already_guessed.push(@guess)
     if @secret_word.include?(@guess)
