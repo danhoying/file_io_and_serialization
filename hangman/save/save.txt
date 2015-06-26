@@ -1,0 +1,16 @@
+--- !ruby/object:Hangman
+guesses_left: 7
+secret_word: untactful
+blanks: u_ta_t_u_
+missed_letters:
+- d
+- h
+- b
+already_guessed:
+- d
+- h
+- u
+- t
+- a
+- b
+guess: save
